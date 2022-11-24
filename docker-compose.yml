@@ -1,0 +1,14 @@
+version: "3"
+services:
+  boiler-plate:
+    # container-name: boiler-plate
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    volumes:
+      - ./src:/go/src/github.com/boiler-plate
+    tty: true
+    env_file:
+      - ./.go_env
+    environment:
+      - TZ=Asia/Tokyo
