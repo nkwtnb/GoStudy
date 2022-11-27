@@ -9,5 +9,6 @@ RUN mkdir -p /go/src/github.com/boiler-plate
 WORKDIR /go/src/github.com/boiler-plate
 # ホストのファイルをコンテナの作業ディレクトリに移行
 ADD . /go/src/github.com/boiler-plate
-# パッケージのインポート
-# RUN go get -u golang.org/x/tools/cmd/goimports
+# golang-mysqlインストール
+RUN go install -tags 'mysql' github.com/golang-migrate/migrate/v4/cmd/migrate@v4.15.2
+RUN go install github.com/gobuffalo/pop/v6/soda@latest
