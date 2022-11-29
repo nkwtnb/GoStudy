@@ -1,7 +1,23 @@
 version: "3"
 services:
+
+  db:
+    image: mysql:8.0
+    container_name: mysql
+    environment:
+      MYSQL_USER: "${DB_USER}"
+      MYSQL_PASSWORD: "${DB_PASSWORD}"
+      MYSQL_ROOT_PASSWORD: "${DB_ROOT_PASSWORD}"
+      MYSQL_DATABASE: "${DB_NAME}"
+    ports: 
+      - "3306:3306"
+    volumes:
+      - ./mysql/conf.d:/etc/mysql/conf.d
+      - ./mysql/data:/var/lib/mysql
+    # tty: true
+
   boiler-plate:
-    # container-name: boiler-plate
+    container_name: boiler-plate
     build:
       context: .
       dockerfile: ./Dockerfile
@@ -10,5 +26,10 @@ services:
     tty: true
     env_file:
       - ./.go_env
+      - ./.env
+    depends_on:
+      - db
     environment:
       - TZ=Asia/Tokyo
+    ports: 
+      - "8888:8888"
